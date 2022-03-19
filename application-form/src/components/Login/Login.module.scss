@@ -1,0 +1,12 @@
+@import 'src/styles/vars';
+
+.avatar {
+  color: $primary-color;
+  font-size: 7rem;
+}
+
+.alert-btn {
+  --border-style: none;
+  --background: gray;
+  --border-width: 0px;
+}

@@ -1,0 +1,7 @@
+{
+  "name": "application-form",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react"
+}
