@@ -39,12 +39,12 @@ const Login: React.FC<ContainerProps> = () => {
     login(loginData)
   }
   return (
-    <IonPage>
-      <IonHeader>
+    <>
+      {/* <IonHeader>
         <IonToolbar>
           <IonTitle>Login</IonTitle>
         </IonToolbar>
-      </IonHeader>
+      </IonHeader> */}
       <IonContent fullscreen>
         <IonRow class="ion-text-center">
           <IonCol>
@@ -108,7 +108,7 @@ const Login: React.FC<ContainerProps> = () => {
           </IonRow>
         </form>
       </IonContent>
-    </IonPage>
+    </>
   )
 }
 

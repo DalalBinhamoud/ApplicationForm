@@ -1,5 +1,11 @@
 import React from 'react'
-import { IonApp, IonRouterOutlet, setupIonicReact } from '@ionic/react'
+import {
+  IonApp,
+  IonPage,
+  IonRouterOutlet,
+  IonSplitPane,
+  setupIonicReact,
+} from '@ionic/react'
 import { IonReactRouter } from '@ionic/react-router'
 import { RouterOutlet } from './router'
 
@@ -21,17 +27,29 @@ import '@ionic/react/css/display.css'
 
 /* Theme variables */
 import './theme/variables.css'
+import Layout from './components/Layout'
+import { getItem } from './helpers'
 
 setupIonicReact()
 
-const App: React.FC = () => (
-  <IonApp>
-    <IonReactRouter>
-      <IonRouterOutlet>
-        <RouterOutlet />
-      </IonRouterOutlet>
-    </IonReactRouter>
-  </IonApp>
-)
+const App: React.FC = () => {
+  //const isLoggedin = getItem('token') ? true : false
+  const isLoggedin = 'open'
+  return (
+    <IonApp>
+      <IonSplitPane contentId="main">
+        {/* expose layout if user is logged-in */}
+        {isLoggedin.length > 0 && <Layout />}
+        <IonPage id="main">
+          <IonReactRouter>
+            <IonRouterOutlet>
+              <RouterOutlet />
+            </IonRouterOutlet>
+          </IonReactRouter>
+        </IonPage>
+      </IonSplitPane>
+    </IonApp>
+  )
+}
 
 export default App

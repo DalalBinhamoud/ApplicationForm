@@ -1,0 +1,22 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+
+  &__info {
+    display: flex;
+    align-items: center;
+    & > * {
+      margin-inline: 0.4rem;
+    }
+  }
+}
+
+.ion-card {
+  flex-basis: 100%;
+}
+
+.action-btn {
+  --border-style: none;
+  --border-width: 0px;
+}
