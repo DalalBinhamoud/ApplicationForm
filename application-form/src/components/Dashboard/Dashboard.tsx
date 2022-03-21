@@ -9,6 +9,7 @@ import {
   IonCol,
 } from '@ionic/react'
 import React, { useState } from 'react'
+import { ChartContainer } from '../Charts/chartContainer'
 interface ContainerProps {}
 
 const Dashboard: React.FC<ContainerProps> = () => {
@@ -23,13 +24,7 @@ const Dashboard: React.FC<ContainerProps> = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
-        <IonRow class="ion-text-center">
-          <IonCol>
-            <p style={{ fontSize: 'medium' }}>
-              Don't have an account? <a href="comming soon">Sign up!</a>
-            </p>
-          </IonCol>
-        </IonRow>
+        <ChartContainer chartData={[{ key: '1', value: '10' }]} />
       </IonContent>
     </IonPage>
   )

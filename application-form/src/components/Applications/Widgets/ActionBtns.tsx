@@ -45,7 +45,7 @@ export const ActionBtns: React.FC<IProps> = ({
   const cancelChanges = () => {
     setName(applicationInfo.candidateInfo.name)
     setPhone(applicationInfo.candidateInfo.phone)
-    setApplicationStatus(status)
+    setApplicationStatus(applicationInfo.status)
     setIsViewMode(true)
   }
 

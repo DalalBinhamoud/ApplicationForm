@@ -5,39 +5,27 @@ import {
   IonItem,
   IonIcon,
   IonLabel,
-  IonButton,
   IonInput,
-  useIonAlert,
 } from '@ionic/react'
 import {} from 'ionicons/icons'
 import styles from '../Applications.module.scss'
-import {
-  personCircle,
-  callOutline,
-  createOutline,
-  trashOutline,
-} from 'ionicons/icons'
+import { personCircle, callOutline } from 'ionicons/icons'
 import { DownloadAttachment } from '../../AttachmentController/DownloadAttachment'
 import { IApplication } from '../../../interfaces/IApplication'
-import useApplicaiontController from '../../../hooks/useApplicaiontController'
 import { UtilConsts } from '../../../helpers'
 import { Select } from '../../General/Select/Select'
+import { ActionBtns } from './ActionBtns'
 
 interface IProps {
   applicationInfo: IApplication
 }
 
 export const ApplicationCard: React.FC<IProps> = ({ applicationInfo }) => {
-  const { id, jobTitle, status, candidateInfo } = applicationInfo
+  const { jobTitle, status, candidateInfo } = applicationInfo
   const [isViewMode, setIsViewMode] = useState(true)
   const [applicationStatus, setApplicationStatus] = useState(status)
   const [name, setName] = useState(candidateInfo.name)
   const [phone, setPhone] = useState(candidateInfo.phone)
-  const {
-    handleApplicationEdit,
-    handleApplicationDelete,
-  } = useApplicaiontController()
-  const [present] = useIonAlert()
   const {
     created,
     completed,
@@ -46,19 +34,6 @@ export const ApplicationCard: React.FC<IProps> = ({ applicationInfo }) => {
   } = UtilConsts.ApplicationStatus()
   const statusOpts = [created, completed, accepted, rejected]
 
-  const saveChanges = () => {
-    applicationInfo.candidateInfo.name = name
-    applicationInfo.candidateInfo.phone = phone
-    applicationInfo.status = applicationStatus
-    handleApplicationEdit(setIsViewMode, applicationInfo)
-  }
-
-  const cancelChanges = () => {
-    setName(applicationInfo.candidateInfo.name)
-    setPhone(applicationInfo.candidateInfo.phone)
-    setApplicationStatus(status)
-    setIsViewMode(true)
-  }
   return (
     <div className={styles['container']}>
       <IonCard>
@@ -72,50 +47,17 @@ export const ApplicationCard: React.FC<IProps> = ({ applicationInfo }) => {
             isDisabled={isViewMode}
           />
 
-          {isViewMode ? (
-            <>
-              <IonButton
-                fill="outline"
-                slot="end"
-                className={styles['action-btn']}
-                onClick={() => setIsViewMode(false)}
-              >
-                <IonIcon icon={createOutline} slot="start" />
-              </IonButton>
-
-              <IonButton
-                fill="outline"
-                slot="end"
-                className={styles['action-btn']}
-                onClick={() =>
-                  present({
-                    header: 'Delete Application',
-                    message:
-                      'Are you sure you want to delete this application?',
-                    buttons: [
-                      'Cancel',
-                      {
-                        text: 'Ok',
-                        handler: (d) => handleApplicationDelete(id),
-                      },
-                    ],
-                    onDidDismiss: (e) => console.log('did dismiss'),
-                  })
-                }
-              >
-                <IonIcon icon={trashOutline} slot="start" />
-              </IonButton>
-            </>
-          ) : (
-            <>
-              <IonButton fill="outline" slot="end" onClick={cancelChanges}>
-                cancel
-              </IonButton>
-              <IonButton fill="outline" slot="end" onClick={saveChanges}>
-                Save
-              </IonButton>
-            </>
-          )}
+          <ActionBtns
+            applicationInfo={applicationInfo}
+            isViewMode={isViewMode}
+            setIsViewMode={setIsViewMode}
+            name={name}
+            setName={setName}
+            phone={phone}
+            setPhone={setPhone}
+            applicationStatus={applicationStatus}
+            setApplicationStatus={setApplicationStatus}
+          />
         </IonItem>
 
         <IonCardContent>

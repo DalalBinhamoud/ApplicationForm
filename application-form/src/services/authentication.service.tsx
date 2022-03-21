@@ -9,7 +9,7 @@ import {
   handleError,
   getItem,
 } from '../helpers'
-import { DASHBOARD } from '../router/routePaths'
+import { ADMIN_PANEL, DASHBOARD } from '../router/routePaths'
 
 export const useAuthenticationService = () => {
   const { axiosApi } = useApi()
@@ -24,7 +24,7 @@ export const useAuthenticationService = () => {
         if (res) {
           setItem(token, res.data.token)
           setItem(refresh_token, res.data.refresh_token)
-          history.push(DASHBOARD)
+          history.push(`${ADMIN_PANEL}${DASHBOARD}`)
         }
         return res.data
       })

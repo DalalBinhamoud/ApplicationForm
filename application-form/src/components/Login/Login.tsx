@@ -1,10 +1,6 @@
-// import './ExploreContainer.css'
+import React from 'react'
 import {
   IonContent,
-  IonHeader,
-  IonPage,
-  IonTitle,
-  IonToolbar,
   IonRow,
   IonCol,
   IonIcon,
@@ -12,48 +8,43 @@ import {
   IonItem,
   IonLabel,
   IonButton,
-  IonAlert,
 } from '@ionic/react'
-import React, { useState } from 'react'
 import { personCircle } from 'ionicons/icons'
 import styles from './Login.module.scss'
 import { useAuthenticationService } from '../../services/authentication.service'
 import { useForm } from 'react-hook-form'
+import { ErrorMessage } from '@hookform/error-message'
 
 interface ContainerProps {}
 
 const Login: React.FC<ContainerProps> = () => {
-  const [email, setEmail] = useState('eve.holt@reqres.in')
-  const [password, setPassword] = useState('cityslicka')
-  const [showAlert, setShowAlert] = useState(false)
   const { login } = useAuthenticationService()
-  const { handleSubmit } = useForm()
+
+  const {
+    handleSubmit,
+    register,
+    getValues,
+    formState: { errors },
+  } = useForm({
+    defaultValues: {
+      email: 'eve.holt@reqres.in',
+      password: 'cityslicka',
+    },
+  })
 
   const handleLogin = () => {
     const loginData = {
-      // "email": "eve.holt@reqres.in",
-      // "password": "cityslicka"
-      email: email,
-      password: password,
+      email: getValues('email'),
+      password: getValues('password'),
     }
     login(loginData)
   }
   return (
     <>
-      {/* <IonHeader>
-        <IonToolbar>
-          <IonTitle>Login</IonTitle>
-        </IonToolbar>
-      </IonHeader> */}
       <IonContent fullscreen>
         <IonRow class="ion-text-center">
           <IonCol>
-            <IonIcon
-              className={styles['avatar']}
-              // position={'center'}
-
-              icon={personCircle}
-            />
+            <IonIcon className={styles['avatar']} icon={personCircle} />
           </IonCol>
         </IonRow>
         <form className="ion-padding" onSubmit={handleSubmit(handleLogin)}>
@@ -62,12 +53,18 @@ const Login: React.FC<ContainerProps> = () => {
               <IonItem>
                 <IonLabel position="floating">Email</IonLabel>
                 <IonInput
-                  type="email"
-                  value={email}
-                  required={true}
-                  onIonChange={(e) => setEmail(e.detail.value!)}
-                ></IonInput>
+                  value={getValues('email')}
+                  placeholder="enter email"
+                  {...register('email', {
+                    required: 'required field',
+                  })}
+                />
               </IonItem>
+              <ErrorMessage
+                errors={errors}
+                name="email"
+                as={<div style={{ color: 'red' }} />}
+              />
             </IonCol>
           </IonRow>
           <IonRow>
@@ -75,35 +72,25 @@ const Login: React.FC<ContainerProps> = () => {
               <IonItem>
                 <IonLabel position="floating">Password</IonLabel>
                 <IonInput
-                  type="password"
-                  value={password}
-                  onIonChange={(e) => setPassword(e.detail.value!)}
-                ></IonInput>
+                  value={getValues('password')}
+                  placeholder="enter password"
+                  {...register('password', {
+                    required: 'required field',
+                  })}
+                />
               </IonItem>
+              <ErrorMessage
+                errors={errors}
+                name="password"
+                as={<div style={{ color: 'red' }} />}
+              />
             </IonCol>
           </IonRow>
           <IonRow>
             <IonCol>
-              <IonButton expand="block" onClick={handleLogin}>
+              <IonButton expand="block" type="submit">
                 Login
               </IonButton>
-              {/* <p style={{ fontSize: 'medium' }}>
-                Don't have an account? <a href="comming soon"></a>
-                <IonButton
-                  expand="block"
-                  className={styles['alert-btn']}
-                  onClick={() => setShowAlert(true)}
-                >
-                  Sign up!
-                </IonButton>
-              </p>
-
-              <IonAlert
-                isOpen={showAlert}
-                onDidDismiss={() => setShowAlert(false)}
-                header={'Comming soon'}
-                buttons={['OK']}
-              /> */}
             </IonCol>
           </IonRow>
         </form>

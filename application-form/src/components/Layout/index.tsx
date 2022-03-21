@@ -1,9 +1,6 @@
 import React, { useState } from 'react'
 import {
   IonMenu,
-  IonHeader,
-  IonToolbar,
-  IonTitle,
   IonContent,
   IonList,
   IonMenuToggle,
@@ -11,23 +8,29 @@ import {
   IonLabel,
   IonItem,
   IonButton,
-  IonButtons,
 } from '@ionic/react'
 import { RouteComponentProps, useHistory, withRouter } from 'react-router'
-import { APPLCATIONS, DASHBOARD } from '../../router/routePaths'
+import { ADMIN_PANEL, APPLCATIONS, DASHBOARD } from '../../router/routePaths'
+import { statsChartOutline } from 'ionicons/icons'
 
 interface Page {
   title: string
   path: string
-  icon: string
+  icon: any
 }
 
 const pages: Page[] = [
-  { title: 'Dashboard', path: DASHBOARD, icon: 'home' },
-  { title: 'Applications', path: APPLCATIONS, icon: 'information' },
+  {
+    title: 'Dashboard',
+    path: `${ADMIN_PANEL}${DASHBOARD}`,
+    icon: statsChartOutline,
+  },
+  {
+    title: 'Applications',
+    path: `${ADMIN_PANEL}${APPLCATIONS}`,
+    icon: statsChartOutline,
+  },
 ]
-
-type Props = RouteComponentProps<{}>
 
 const Layout = () => {
   const [activePage, setActivePage] = useState(pages[0].title)
@@ -42,7 +45,7 @@ const Layout = () => {
           color={page.title === activePage ? 'primary' : ''}
           onClick={() => navigateToPage(page)}
         >
-          <IonIcon slot="start" name={page.icon}></IonIcon>
+          <IonIcon icon={page.icon} />
           <IonLabel>{page.title}</IonLabel>
         </IonItem>
       </IonMenuToggle>
@@ -50,35 +53,15 @@ const Layout = () => {
   }
 
   const navigateToPage = (page: Page) => {
-    console.log('page=', page)
     history.push(page.path)
     setActivePage(page.title)
   }
 
   return (
-    <IonMenu contentId="main">
-      {/* <IonHeader>
-        <IonToolbar>
-          <IonTitle>Menu</IonTitle>
-        </IonToolbar> */}
-      {/* <IonContent>
-          <IonMenuToggle autoHide={false}>
-            <IonButton>Toggle Menu</IonButton>
-          </IonMenuToggle>
-        </IonContent> */}
-
-      {/* <IonToolbar>
-          <IonButtons slot="start">
-           
-              <IonButton>
-                <IonIcon slot="icon-only" name="menu"></IonIcon>
-              </IonButton>
-            </IonMenuToggle>
-          </IonButtons>
-          <IonTitle>Header</IonTitle>
-        </IonToolbar>
-      </IonHeader> */}
-
+    <IonMenu
+      contentId="main"
+      // hidden={!isLoggedIn}
+    >
       <IonContent>
         <IonButton onClick={() => setHide(!hide)}>
           <IonIcon slot="icon-only" name="menu"></IonIcon>
@@ -90,20 +73,12 @@ const Layout = () => {
           //   }}
         >
           <IonList>{renderMenuItems()}</IonList>
-
-          {/* //           <IonButtons slot="start">
-//             <IonMenuToggle>
-//               <IonButton>
-//                 <IonIcon slot="icon-only" name="menu"></IonIcon>
-//               </IonButton>
-//             </IonMenuToggle>
-//           </IonButtons> */}
         </IonMenuToggle>
       </IonContent>
     </IonMenu>
   )
 }
 
-// export default withRouter(Layout)
+export default withRouter(Layout)
 
-export default Layout
+// export default Layout

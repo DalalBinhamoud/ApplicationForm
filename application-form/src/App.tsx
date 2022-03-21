@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   IonApp,
   IonPage,
@@ -8,6 +8,19 @@ import {
 } from '@ionic/react'
 import { IonReactRouter } from '@ionic/react-router'
 import { RouterOutlet } from './router'
+import {
+  Route,
+  RouteComponentProps,
+  useHistory,
+  useLocation,
+  withRouter,
+} from 'react-router'
+import {
+  ADMIN_PANEL,
+  APPLCATIONS,
+  CAREER_PAGE,
+  DASHBOARD,
+} from './router/routePaths'
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css'
@@ -28,26 +41,28 @@ import '@ionic/react/css/display.css'
 /* Theme variables */
 import './theme/variables.css'
 import Layout from './components/Layout'
-import { getItem } from './helpers'
 
 setupIonicReact()
 
 const App: React.FC = () => {
-  //const isLoggedin = getItem('token') ? true : false
-  const isLoggedin = 'open'
+  // const [isLoggedIn, setIsLoggedin] = useState(false)
+  const history = useHistory()
+
   return (
     <IonApp>
-      <IonSplitPane contentId="main">
-        {/* expose layout if user is logged-in */}
-        {isLoggedin.length > 0 && <Layout />}
-        <IonPage id="main">
-          <IonReactRouter>
-            <IonRouterOutlet>
-              <RouterOutlet />
-            </IonRouterOutlet>
-          </IonReactRouter>
-        </IonPage>
-      </IonSplitPane>
+      {/* expose layout if user is logged-in */}
+      {/* {isLoggedin && <Layout />} */}
+
+      <IonPage id="main">
+        <IonReactRouter>
+          {/* <IonSplitPane contentId="main">
+            <Layout /> */}
+          <IonRouterOutlet>
+            <RouterOutlet />
+          </IonRouterOutlet>
+          {/* </IonSplitPane> */}
+        </IonReactRouter>
+      </IonPage>
     </IonApp>
   )
 }
