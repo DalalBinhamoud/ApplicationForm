@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import {
   IonApp,
+  IonContent,
   IonPage,
   IonRouterOutlet,
   IonSplitPane,
@@ -46,7 +47,6 @@ setupIonicReact()
 
 const App: React.FC = () => {
   // const [isLoggedIn, setIsLoggedin] = useState(false)
-  const history = useHistory()
 
   return (
     <IonApp>
@@ -55,10 +55,18 @@ const App: React.FC = () => {
 
       <IonPage id="main">
         <IonReactRouter>
-          {/* <IonSplitPane contentId="main">
-            <Layout /> */}
+          {/* <IonSplitPane contentId="main"> */}
+          {/* <Layout /> */}
           <IonRouterOutlet>
+            {/* <div
+                style={{
+                  background: 'green',
+                  marginRight: '20%',
+                  width: '50%',
+                }}
+              > */}
             <RouterOutlet />
+            {/* </div> */}
           </IonRouterOutlet>
           {/* </IonSplitPane> */}
         </IonReactRouter>

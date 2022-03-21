@@ -1,5 +1,6 @@
 import React, { useEffect, useState, FC } from 'react'
 import ReactEcharts from 'echarts-for-react'
+import { IResume } from '../../interfaces/IResume'
 
 interface IProps {
   chartData: any
@@ -7,34 +8,26 @@ interface IProps {
 }
 
 export const PieChart: FC<IProps> = ({ chartData, chartType }) => {
+  var _ = require('lodash')
   const [pieChartValues, setPieChartValues] = useState<
     { name: string; value: number; type?: string }[]
   >([{ name: '', value: 0, type: '' }])
 
-  const tmp: any = []
   useEffect(() => {
     if (chartData) {
-      if (chartType === 'numOfVersions') {
-        chartData.entityElementResult.forEach((element: any) => {
-          tmp.push({
-            value: element.numberOfVersions,
-            name: element.entityName,
-            type: element.assessmentType,
-          })
-        })
-        setPieChartValues(tmp)
-      } else {
-        setPieChartValues([
-          {
-            value: chartData.totalSelfAssessmentType,
-            name: 'SELF_ASSESSMENT',
-          },
-          {
-            value: chartData.totalExternalAssessmentType,
-            name: 'EXTERNAL_ASSESSMENT',
-          },
-        ])
-      }
+      let groupedByStatus = _.groupBy(chartData, 'status')
+      console.log('groupedByStatus=', groupedByStatus)
+
+      setPieChartValues([
+        {
+          value: 2, //groupedByStatus['accepted'].length,
+          name: 'Accepted',
+        },
+        {
+          value: 3, //groupedByStatus['rejected'].length,
+          name: 'Rejected',
+        },
+      ])
     }
   }, [chartData])
 
@@ -62,27 +55,7 @@ export const PieChart: FC<IProps> = ({ chartData, chartType }) => {
     },
     series: [
       {
-        name: getChartName(),
-        normal: {
-          label: {
-            show: true,
-            position: 'inner',
-            formatter: function (params: any) {
-              return params + '%\n'
-            },
-          },
-          labelLine: {
-            show: false,
-          },
-        },
         type: 'pie',
-        hoverOffset: 1,
-        cursor: 'default',
-        emphasis: {
-          label: {
-            show: true,
-          },
-        },
         data: pieChartValues,
       },
     ],

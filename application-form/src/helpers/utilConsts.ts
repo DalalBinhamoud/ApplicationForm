@@ -25,6 +25,11 @@ export const UtilConsts = {
       crudApplication: `/application`,
     }
   },
+  DashboardApis: () => {
+    return {
+      getDashboardResumes: '/dashboard/resumes',
+    }
+  },
 
   ApplicationStatus: () => {
     return {

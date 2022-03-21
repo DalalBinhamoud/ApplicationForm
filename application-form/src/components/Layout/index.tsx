@@ -60,6 +60,7 @@ const Layout = () => {
   return (
     <IonMenu
       contentId="main"
+      // style={{ zIndex: '2' }}
       // hidden={!isLoggedIn}
     >
       <IonContent>

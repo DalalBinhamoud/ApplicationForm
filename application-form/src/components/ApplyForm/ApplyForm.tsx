@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import {
   IonLabel,
   IonBackButton,
@@ -17,6 +17,7 @@ import { useForm, Controller } from 'react-hook-form'
 import { ErrorMessage } from '@hookform/error-message'
 import * as RegularConstants from '../../helpers/RegularExpressionConstants'
 import styles from './ApplyForm.module.scss'
+import { useApplicationService } from '../../services/application.service'
 
 const ApplyForm: React.FunctionComponent = () => {
   const {
@@ -28,18 +29,20 @@ const ApplyForm: React.FunctionComponent = () => {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      name: '',
+      firstName: '',
+      lastName: '',
       email: '',
       job: '',
       skills: [],
       file: null,
     },
   })
-
+  const { postApplication } = useApplicationService()
   const preDefinedSkills = ['teamwork', 'communication', 'problem solving']
 
   const onSubmit = (data: any) => {
-    alert(JSON.stringify(data, null, 2))
+    // alert(JSON.stringify(data, null, 2))
+    postApplication(data)
   }
 
   return (
@@ -55,23 +58,42 @@ const ApplyForm: React.FunctionComponent = () => {
       <IonContent>
         <form onSubmit={handleSubmit(onSubmit)}>
           <IonItem>
-            <IonLabel position="floating">Name</IonLabel>
+            <IonLabel position="floating">First Name</IonLabel>
             <IonInput
-              placeholder="enter name"
-              {...register('name', {
+              placeholder="enter first name"
+              {...register('firstName', {
                 required: 'required field',
                 pattern: {
                   value: RegularConstants.ENGLISH_LETTERS,
-                  message: 'name should contain letters only',
+                  message: 'first name should contain letters only',
                 },
               })}
             />
           </IonItem>
           <ErrorMessage
             errors={errors}
-            name="name"
+            name="firstName"
             as={<div style={{ color: 'red' }} />}
           />
+          <IonItem>
+            <IonLabel position="floating">Last Name</IonLabel>
+            <IonInput
+              placeholder="enter lastName"
+              {...register('lastName', {
+                required: 'required field',
+                pattern: {
+                  value: RegularConstants.ENGLISH_LETTERS,
+                  message: 'lastName should contain letters only',
+                },
+              })}
+            />
+          </IonItem>
+          <ErrorMessage
+            errors={errors}
+            name="lastName"
+            as={<div style={{ color: 'red' }} />}
+          />
+
           <IonItem>
             <IonLabel position="floating">Email</IonLabel>
             <IonInput

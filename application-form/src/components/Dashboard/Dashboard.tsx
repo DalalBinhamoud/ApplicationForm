@@ -20,11 +20,11 @@ const Dashboard: React.FC<ContainerProps> = () => {
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>Login</IonTitle>
+          <IonTitle>Dashboard</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
-        <ChartContainer chartData={[{ key: '1', value: '10' }]} />
+        <ChartContainer />
       </IonContent>
     </IonPage>
   )

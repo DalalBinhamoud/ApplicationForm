@@ -1,86 +1,29 @@
 import React, { FC, useEffect } from 'react'
 import ReactEcharts from 'echarts-for-react'
+import { IResume } from '../../interfaces/IResume'
 
 interface IProps {
-  chartData: any
+  chartData: IResume[]
 }
 
 const LineChart: FC<IProps> = ({ chartData }) => {
-  const temp: string[] = []
-
-  const xAxisData = () => {
-    let arr: any = []
-    if (chartData) {
-      arr = temp
-    }
-    return arr
-  }
-
-  const getDataBasedOnLevel = () => {
-    const levels: any = []
-
-    if (chartData) {
-      chartData.entityElementResult.forEach((element: any) => {
-        levels.push({
-          data: getYAxisData(element.entityElementResult),
-          type: 'line',
-          name: element.elementName,
-          symbolSize: 3,
-          lineStyle: {
-            width: 1.7,
-          },
-          itemStyle: {
-            normal: {
-              symbol: '',
-            },
-          },
-        })
-      })
-    }
-    return levels
-  }
-
-  const getLevelNumber = () => {
-    const levels = getDataBasedOnLevel()
-    const levelsNumber: string[] = []
-
-    levels.forEach((element: any) => {
-      levelsNumber.push(element.number)
+  const xAxisValues: string[] = []
+  const yAxisValues: number[] = []
+  useEffect(() => {
+    chartData.forEach((element) => {
+      xAxisValues.push(element.resumeLink)
+      yAxisValues.push(element.overallScore)
     })
-    return levelsNumber
-  }
-
-  const getYAxisData = (entityElementResult?: any) => {
-    const arr: any = []
-    if (chartData) {
-      chartData.entityElementResult.forEach((element: any) => {
-        arr.push(element.complianceResult)
-        if (!temp.includes(element.entityName)) {
-          temp.push(element.entityName)
-        }
-      })
-    }
-
-    return arr
-  }
-
-  useEffect(() => {}, [chartData])
+  }, [chartData])
 
   const chartOptions = {
-    grid: {
-      left: 0,
-      right: '3%',
-    },
-    tooltip: {
-      trigger: 'item',
-    },
-    legend: {
-      data: getLevelNumber(),
-      icon: 'rect',
-      y: 'top',
-    },
+    // legend: {
+    //   data:,
+    //   icon: 'rect',
+    //   y: 'top',
+    // },
     xAxis: {
-      data: xAxisData(),
+      data: xAxisValues,
       axisLabel: {
         textStyle: {
           color: '#aeaeae',
@@ -136,7 +79,7 @@ const LineChart: FC<IProps> = ({ chartData }) => {
     ],
     series: [
       {
-        data: getYAxisData(),
+        data: yAxisValues,
         type: 'line',
         smooth: true,
         name: 'overal score',
