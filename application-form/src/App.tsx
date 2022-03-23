@@ -48,6 +48,11 @@ setupIonicReact()
 const App: React.FC = () => {
   // const [isLoggedIn, setIsLoggedin] = useState(false)
 
+  //http://localhost:8100/admin-panel/dashboard
+  //http://localhost:8100/admin-panel/applications
+  //http://localhost:8100/career-page/apply
+  //http://localhost:8100/login
+
   return (
     <IonApp>
       {/* expose layout if user is logged-in */}

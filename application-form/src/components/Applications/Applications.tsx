@@ -5,7 +5,6 @@ import {
   IonInfiniteScroll,
   IonInfiniteScrollContent,
   IonItem,
-  IonLabel,
   IonList,
   IonPage,
   IonTitle,
@@ -19,7 +18,7 @@ import { ApplicationCard } from './Widgets/ApplicationCard'
 
 const Applications: React.FC = () => {
   const [data, setData] = useState<IApplication[]>([])
-  const [isInfiniteDisabled, setInfiniteDisabled] = useState(false)
+  const [isInfiniteDisabled, setInfiniteDisabled] = useState(true)
 
   const pushData = () => {
     const max = data.length + 20
@@ -72,7 +71,7 @@ const Applications: React.FC = () => {
           onClick={() => setInfiniteDisabled(!isInfiniteDisabled)}
           expand="block"
         >
-          Toggle Infinite Scroll
+          Scroll
         </IonButton>
 
         <IonList>
